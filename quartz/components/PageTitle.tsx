@@ -24,7 +24,7 @@ export default ((userOpts?: Partial<PageTitleOptions>) => {
         <a href={baseDir} aria-label="Home">
           <RotatingGlobe id="rotating-globe" interval={500} />
         </a>
-        {(!opts.hideOnRoot || !isRoot) && <div>{title}</div>}
+        {/* {(!opts.hideOnRoot || !isRoot) && <div>{title}</div>} */}
       </h1>
     )
   }
