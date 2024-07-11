@@ -1,3 +1,37 @@
 @use "./base.scss";
+@use "./variables.scss" as *;
 
 // put your custom CSS here!
+@media (max-width: $mobileBreakpoint) {
+  .search {
+    flex-grow: 0;
+
+    #search-icon {
+      padding: 0;
+
+      p,
+      div {
+        display: none;
+      }
+    }
+  }
+}
+
+.darkmode {
+  height: 2rem;
+}
+
+.page-title a {
+  & > #rotating-globe {
+    font-size: 5rem;
+    line-height: 1;
+  }
+}
+
+.page {
+  & > #quartz-body {
+    & .sidebar.left {
+      align-items: flex-start;
+    }
+  }
+}
