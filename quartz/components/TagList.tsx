@@ -2,57 +2,80 @@ import { pathToRoot, slugTag } from "../util/path"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { classNames } from "../util/lang"
 
-const TagList: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
-  const tags = fileData.frontmatter?.tags
-  const baseDir = pathToRoot(fileData.slug!)
-  if (tags && tags.length > 0) {
-    return (
-      <ul class={classNames(displayClass, "tags")}>
-        {tags.map((tag) => {
-          const linkDest = baseDir + `/tags/${slugTag(tag)}`
-          return (
-            <li>
-              <a href={linkDest} class="internal tag-link">
-                {tag}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-    )
-  } else {
-    return null
+interface TagListOptions {
+  /**
+   * Whether to display tag list on root `index.md`
+   */
+  hideOnRoot: boolean
+}
+
+const defaultOptions: TagListOptions = {
+  hideOnRoot: true,
+}
+
+export default ((userOpts?: Partial<TagListOptions>) => {
+  const TagList: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
+    const opts = { ...defaultOptions, ...userOpts }
+    const tags = fileData.frontmatter?.tags
+    const baseDir = pathToRoot(fileData.slug!)
+
+    // Check if it's the root page
+    const isRoot = fileData.slug === "index"
+
+    // If it's the root page and hideOnRoot is true, return null
+    if (isRoot && opts.hideOnRoot) {
+      return null
+    }
+
+    if (tags && tags.length > 0) {
+      return (
+        <ul class={classNames(displayClass, "tags")}>
+          {tags.map((tag) => {
+            const linkDest = baseDir + `/tags/${slugTag(tag)}`
+            return (
+              <li>
+                <a href={linkDest} class="internal tag-link">
+                  {tag}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      )
+    } else {
+      return null
+    }
   }
-}
 
-TagList.css = `
-.tags {
-  list-style: none;
-  display: flex;
-  padding-left: 0;
-  gap: 0.4rem;
-  margin: 1rem 0;
-  flex-wrap: wrap;
-  justify-self: end;
-}
+  TagList.css = `
+  .tags {
+    list-style: none;
+    display: flex;
+    padding-left: 0;
+    gap: 0.4rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+    justify-self: end;
+  }
 
-.section-li > .section > .tags {
-  justify-content: flex-end;
-}
-  
-.tags > li {
-  display: inline-block;
-  white-space: nowrap;
-  margin: 0;
-  overflow-wrap: normal;
-}
+  .section-li > .section > .tags {
+    justify-content: flex-end;
+  }
+    
+  .tags > li {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0;
+    overflow-wrap: normal;
+  }
 
-a.internal.tag-link {
-  border-radius: 8px;
-  background-color: var(--highlight);
-  padding: 0.2rem 0.4rem;
-  margin: 0 0.1rem;
-}
-`
+  a.internal.tag-link {
+    border-radius: 8px;
+    background-color: var(--highlight);
+    padding: 0.2rem 0.4rem;
+    margin: 0 0.1rem;
+  }
+  `
 
-export default (() => TagList) satisfies QuartzComponentConstructor
+  return TagList
+}) satisfies QuartzComponentConstructor
