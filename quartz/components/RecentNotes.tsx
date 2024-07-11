@@ -21,7 +21,7 @@ const defaultOptions = (cfg: GlobalConfiguration): Options => ({
   limit: 3,
   linkToMore: false,
   showTags: true,
-  filter: () => true,
+  filter: (f: QuartzPluginData) => f.slug !== "index",
   sort: byDateAndAlphabetical(cfg),
 })
 
