@@ -1,4 +1,4 @@
-name: AJ Galloway
+name: Deploy Quartz site to GitHub Pages
 
 on:
   push:
