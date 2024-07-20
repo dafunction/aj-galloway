@@ -4,6 +4,8 @@ draft: false
 tags:
   - TIL
   - bash
+date: 2024-07-12T11:30:00
+lastmod:
 ---
 This is a neat package that can display a directory tree in a graphical way within the terminal.  There are multiple uses for this, and a few that are immediately obvious for me are for any developers writing technical documentation.  Additionally, this could be useful with [fabric](https://github.com/danielmiessler/fabric) (which i'm planning on writing about more soon), as I've been playing with it for the past week or so.
 
